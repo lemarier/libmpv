@@ -35,7 +35,7 @@ jobs:
           7z a -tzip ../../win32.zip mpv.lib
 
       - name: Fix linking [mac]
-        if: matrix.os == 'windows-latest'
+        if: matrix.os == 'macOS-latest'
         run: |
           cd mac/lib
           find *.dylib | while read LINE
