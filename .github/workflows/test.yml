@@ -29,13 +29,15 @@ jobs:
         run: |
           cd win32-x64
           lib /def:mpv.def /name:mpv-1.dll /out:mpv.lib /MACHINE:X64
+          7z a -tzip ../../win32-x64.zip mpv.lib
           cd ..\win32
           lib /def:mpv.def /name:mpv-1.dll /out:mpv.lib /MACHINE:X86
+          7z a -tzip ../../win32.zip mpv.lib
 
       - name: Fix linking [mac]
         if: matrix.os == 'windows-latest'
         run: |
-          cd mac
+          cd mac/lib
           find *.dylib | while read LINE
           do
               otool -l "$LINE" | grep "name " | grep "/usr/local/Cellar" | cut -d " " -f11 | while read LIB
@@ -45,27 +47,8 @@ jobs:
               done
           done
 
-
-      - name: Create ZIP [mac]
-        if: matrix.os == 'macOS-latest'
-        uses: thedoctor0/zip-release@master
-        with:
-          filename: 'mac.zip'
-          path: './mac'
-
-      - name: Create ZIP [win32]
-        if: matrix.os == 'windows-latest'
-        uses: thedoctor0/zip-release@master
-        with:
-          filename: 'win32.zip'
-          path: '.\win32\mpv.lib'
-
-      - name: Create ZIP [win32-x64]
-        if: matrix.os == 'windows-latest'
-        uses: thedoctor0/zip-release@master
-        with:
-          filename: 'win32-x64.zip'
-          path: '.\win32-x64\mpv.lib'
+          cd ..
+          zip ../mac.zip *
 
       - name: Release Plugin
         uses: softprops/action-gh-release@master
