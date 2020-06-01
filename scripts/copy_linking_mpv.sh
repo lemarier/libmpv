@@ -6,16 +6,16 @@ for ffmpeg_path in `brew info mpv | grep 'Cellar/mpv/.*\*' | awk -F' ' '{ print 
 for source in `find $COPY_FROM_PATH/lib -type f | grep libmpv`; do cp -v -f $source ./mac; done;
 
 
-#replace references to an absolute path with @executable_path
+#replace references to an absolute path with @loader_path
 #which will allow to run ffmpeg that loads dylibs from the bundle
 function replace_dlybs() {
 	DYLIBS=`otool -L $1 | grep "/usr/local/Cellar" | awk -F' ' '{print \$1 }'`
-	for dylib in $DYLIBS; do sudo install_name_tool -change $dylib @executable_path/`basename $dylib` $1; done;
+	for dylib in $DYLIBS; do sudo install_name_tool -change $dylib @loader_path/`basename $dylib` $1; done;
 	for dylib in $DYLIBS; do cp -f -n $dylib ./mac; done;
 	DYLIBS=`otool -L $1 | grep "/usr/local/opt" | awk -F' ' '{print \$1 }'`
-	for dylib in $DYLIBS; do sudo install_name_tool -change $dylib @executable_path/`basename $dylib` $1; done;
+	for dylib in $DYLIBS; do sudo install_name_tool -change $dylib @loader_path/`basename $dylib` $1; done;
 	for dylib in $DYLIBS; do cp -f -n $dylib ./mac; done;
-	sudo install_name_tool -id @executable_path/`basename $dylib` $1
+	sudo install_name_tool -id @loader_path/`basename $dylib` $1
 }
 
 #first replace occurences in ffmpeg and ffprobe binaries
