@@ -32,7 +32,8 @@ jobs:
           7z a -tzip ../win32-x64.zip *
           cd ..\win32
           lib /def:mpv.def /name:mpv-1.dll /out:mpv.lib /MACHINE:X86
-          7z a -tzip ../win32.zip *
+          cd ..
+          7z a -tzip ../win.zip win32*
 
       - name: Zip [mac]
         if: matrix.os == 'macOS-latest'
@@ -48,6 +49,5 @@ jobs:
           tag_name: "libmpv release"
           draft: true
           files: |
-            win32-x64.zip
-            win32.zip
+            win.zip
             mac.zip
