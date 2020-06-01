@@ -29,16 +29,16 @@ jobs:
         run: |
           cd win32-x64
           lib /def:mpv.def /name:mpv-1.dll /out:mpv.lib /MACHINE:X64
-          7z a -ttar ../win32-x64.tar mpv.lib
+          7z a -tzip -so ../win32-x64.zip mpv.lib
           cd ..\win32
           lib /def:mpv.def /name:mpv-1.dll /out:mpv.lib /MACHINE:X86
-          7z a -ttar ../win32.tar mpv.lib
+          7z a -tzip -so ../win32.zip mpv.lib
 
       - name: Zip [mac]
         if: matrix.os == 'macOS-latest'
         run: |
           cd mac
-          tar -cf ../mac.tar *
+          zip -r ../mac.zip *
 
       - name: Release Plugin
         uses: softprops/action-gh-release@master
@@ -48,6 +48,6 @@ jobs:
           tag_name: "libmpv release"
           draft: true
           files: |
-            win32-x64.tar
-            win32.tar
-            mac.tar
+            win32-x64.zip
+            win32.zip
+            mac.zip
