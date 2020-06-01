@@ -2,11 +2,7 @@
 COPY_FROM_PATH=""
 for ffmpeg_path in `brew info ffmpeg | grep 'Cellar/ffmpeg/.*\*' | awk -F' ' '{ print $1 }'`; do COPY_FROM_PATH="$(echo $ffmpeg_path)"; done;
 
-#copy all the binaries
-for source in `find $COPY_FROM_PATH/bin -type f | grep ffmpeg`; do cp -v -f $source ./mac; done;
-
-#I need ffprobe and ffmpeg only, so I remove ffserver here. If you need it - comment this line
-cd mac && rm -f ffserver && cd ..
+cp -v -f $COPY_FROM_PATH/bin/ffmpeg ./mac
 
 #replace references to an absolute path with @executable_path
 #which will allow to run ffmpeg that loads dylibs from the bundle
