@@ -30,7 +30,7 @@ for file in `ls mac/*.dylib`; do
 	replace_dlybs $file
 done;
 
-rm -Rf mac/Python
+#rm -Rf mac/Python
 rm -Rf mac/libmpv.1.dylib
-ln -s ./mac/libmpv.1.107.0.dylib ./mac/libmpv.1.dylib
-ln -s ./mac/libmpv.1.107.0.dylib ./mac/libmpv.dylib
+ln -s ./libmpv.1.107.0.dylib ./mac/libmpv.1.dylib
+ln -s ./libmpv.1.107.0.dylib ./mac/libmpv.dylib
