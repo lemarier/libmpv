@@ -48,6 +48,6 @@ jobs:
           tag_name: "libmpv release"
           draft: true
           files: |
-            win32-x64.zip
-            win32.zip
-            mac.zip
+            win32-x64.tar
+            win32.tar
+            mac.tar
