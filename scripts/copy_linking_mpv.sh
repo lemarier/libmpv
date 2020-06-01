@@ -24,6 +24,9 @@ for file in `ls mac/*`; do
 	replace_dlybs $file
 done;
 
+# missing deps
+cp -R /usr/local/opt/libffi/lib/libffi.7.dylib ./mac/
+
 #then replace occurrences in all the additional dylibs that were copied in the previous step
 for file in `ls mac/*.dylib`; do
 	echo replacing dylibs for $file
