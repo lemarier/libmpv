@@ -29,10 +29,10 @@ jobs:
         run: |
           cd win32-x64
           lib /def:mpv.def /name:mpv-1.dll /out:mpv.lib /MACHINE:X64
-          7z a -tzip -so ../win32-x64.zip mpv.lib
+          7z a -tzip ../win32-x64.zip mpv.lib
           cd ..\win32
           lib /def:mpv.def /name:mpv-1.dll /out:mpv.lib /MACHINE:X86
-          7z a -tzip -so ../win32.zip mpv.lib
+          7z a -tzip ../win32.zip mpv.lib
 
       - name: Zip [mac]
         if: matrix.os == 'macOS-latest'
