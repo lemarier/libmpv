@@ -34,20 +34,10 @@ jobs:
           lib /def:mpv.def /name:mpv-1.dll /out:mpv.lib /MACHINE:X86
           7z a -tzip ../win32.zip mpv.lib
 
-      - name: Fix linking [mac]
+      - name: Zip [mac]
         if: matrix.os == 'macOS-latest'
         run: |
-          cd mac/lib
-          find *.dylib | while read LINE
-          do
-              otool -l "$LINE" | grep "name " | grep "/usr/local/Cellar" | cut -d " " -f11 | while read LIB
-              do
-                  echo "$LINE -> $LIB"
-                  install_name_tool -change "$LIB" "@executable_path/../Frameworks/$(basename $LIB)" $LINE
-              done
-          done
-
-          cd ..
+          cd mac
           zip -r ../mac.zip *
 
       - name: Release Plugin
